@@ -218,6 +218,7 @@ const UpcomingEventsList = () => {
         onCancel={handleModalClose}
         footer={null} // Không cần nút OK/Cancel
         width={800} // Tăng chiều rộng
+        bodyStyle={{ minHeight: '600px' }}
       >
         <Spin spinning={modalLoading}>
           {modalError && <p className="text-red-600 text-center">{modalError}</p>}
