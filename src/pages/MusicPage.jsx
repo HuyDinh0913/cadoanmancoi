@@ -82,8 +82,8 @@ const MusicPage = () => {
           const mockData = [
             { id: 1, title: 'Cao cung lên', video_url: 'https://www.youtube.com/watch?v=TJhGLx5mIcg&list=RDTJhGLx5mIcg&start_radio=1&pp=ygUNY2FvIGN1bmcgbMOqbqAHAQ%3D%3D', season: 'christmas' },
             { id: 2, title: 'Lễ vật dâng Chúa Hài Nhi', video_url: 'https://www.youtube.com/watch?v=A27dDqRzUCQ&list=RDA27dDqRzUCQ&start_radio=1', season: 'christmas' },
-            { id: 3, title: 'Hang Bê Lem', video_url: 'https://www.youtube.com/watch?v=tK60oDwVy_k&list=RDtK60oDwVy_k&start_radio=1&pp=ygUNQ2jDumEgdOG7qyBiaaAHAQ%3D%3D', season: 'christmas' },
-            { id: 4, title: 'Đêm nay Noel về', video_url: 'https://www.youtube.com/watch?v=tL8ey8qKszk&list=RDtL8ey8qKszk&start_radio=1&pp=ygULZ2nDoW5nIHNpbmigBwE%3D', season: 'christmas' },
+            // { id: 3, title: 'Hang Bê Lem', video_url: 'https://www.youtube.com/watch?v=tK60oDwVy_k&list=RDtK60oDwVy_k&start_radio=1&pp=ygUNQ2jDumEgdOG7qyBiaaAHAQ%3D%3D', season: 'christmas' },
+            // { id: 4, title: 'Đêm nay Noel về', video_url: 'https://www.youtube.com/watch?v=tL8ey8qKszk&list=RDtL8ey8qKszk&start_radio=1&pp=ygULZ2nDoW5nIHNpbmigBwE%3D', season: 'christmas' },
             { id: 5, title: 'Chúa sẽ đền bù', video_url: 'https://www.youtube.com/watch?v=AArjzw5KAVM&list=RDAArjzw5KAVM&start_radio=1&pp=ygUfY2jDumEgc-G6vSDEkeG7gW4gYsO5IG1pIHRy4bqnbaAHAQ%3D%3D', season: 'ordinary_time' },
             { id: 6, title: 'Thập giá Đức Ki Tô', video_url: 'https://www.youtube.com/watch?v=wnVPszyqGVM&list=RDwnVPszyqGVM&start_radio=1', season: 'lent' },
             { id: 7, title: 'Xuất hành', video_url: 'https://www.youtube.com/watch?v=nG4_t0qN2oA&list=RDnG4_t0qN2oA&start_radio=1&pp=ygUZbeG7q25nIGNow7phIHPhu5FuZyBs4bqhaaAHAdIHCQkDCgGHKiGM7w%3D%3D', season: 'lent' },
