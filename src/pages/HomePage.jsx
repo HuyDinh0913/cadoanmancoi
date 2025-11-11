@@ -232,9 +232,16 @@ const UpcomingEventsList = () => {
               {/* Tabs cho các nội dung */}
               <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="Lời Bài Hát" key="1">
-                  <pre className="whitespace-pre-wrap font-sans text-sm h-80 overflow-y-auto bg-gray-50 p-4 rounded">
+                  <div className="
+                    whitespace-pre-wrap  
+                    font-serif           
+                    text-base            
+                    leading-relaxed      
+                    text-navy-800        
+                    h-80 overflow-y-auto bg-gray-50 p-4 rounded
+                  ">
                     {selectedSong.lyrics || 'Chưa có lời bài hát.'}
-                  </pre>
+                  </div>
                 </Tabs.TabPane>
                 
                 <Tabs.TabPane tab="Sheet Nhạc (PDF)" key="2">
@@ -381,7 +388,7 @@ const HomePage = () => {
           <div className="bg-black/10 backdrop-brightness-[.7] p-8 md:p-12 w-full h-full flex flex-col items-center justify-center"> 
             
             <h1 className="text-4xl md:text-6xl font-black font-serif mb-4">
-              Phụng Sự Bằng Lời Ca Tiếng Hát
+              Phụng Vụ Bằng Lời Ca Tiếng Hát
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
