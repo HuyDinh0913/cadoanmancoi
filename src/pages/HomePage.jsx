@@ -239,7 +239,7 @@ const UpcomingEventsList = () => {
                     text-base            
                     leading-relaxed      
                     text-navy-800        
-                    h-150 overflow-y-auto bg-gray-50 p-4 rounded
+                    h-250 overflow-y-auto bg-gray-50 p-4 rounded
                   ">
                     {selectedSong.lyrics || 'Chưa có lời bài hát.'}
                   </div>
