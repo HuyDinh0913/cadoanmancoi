@@ -3,7 +3,7 @@
  * Khi ở local, nó có thể là 'http://localhost:8080/api/v1'
  * Khi deploy, nó là '/api/v1' (nếu dùng proxy)
  */
-export const API_BASE_URL = 'https://cadoanmancoiproject.onrender.com'; // Mô phỏng proxy
+export const API_BASE_URL = 'https://cadoanmancoiproject.onrender.com/api'; // Mô phỏng proxy
 
 /**
  * Hàm helper để chuẩn hóa (bỏ dấu) chữ Tiếng Việt
