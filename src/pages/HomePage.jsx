@@ -403,11 +403,24 @@ const LatestNewsFeed = () => {
   };
 
   // Chuẩn bị slide cho Lightbox
-  const slides = galleryImages.map(img => ({ 
+  const slides = galleryImages.map(img => {
+  if (img.type === 'video') {
+    return {
+      type: "video",
+      sources: [
+        {
+          src: img.src, // URL của video
+          type: "video/mp4" // Giả định định dạng là mp4, có thể cần tùy chỉnh
+        }
+      ]
+    };
+  }
+  return { 
     src: img.src, 
     width: img.width, 
     height: img.height 
-  }));
+  };
+});
 
   if (loading) return <LoadingSpinner />;
   if (error) return <p className="text-center text-red-600">{error}</p>;
@@ -486,6 +499,7 @@ const LatestNewsFeed = () => {
         close={() => setLightboxOpen(false)}
         slides={slides}
         index={lightboxIndex}
+        plugins={[Video]}
       />
     </>
   );
