@@ -12,10 +12,16 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 
-// SỬA: Import các component Ant Design cho Modal
+// Import các component Ant Design cho Modal
 import { Modal, Spin, Tabs } from 'antd';
 
-// SỬA: Hàm trợ giúp để chuyển đổi link YouTube thường thành link embed
+// Import thư viện Lightbox và CSS (Masonry library không cần nữa)
+import Lightbox from "yet-another-react-lightbox";
+import Video from "yet-another-react-lightbox/plugins/video";
+import "yet-another-react-lightbox/styles.css";
+
+
+// Hàm trợ giúp để chuyển đổi link YouTube thường thành link embed
 const getYouTubeEmbedUrl = (url) => {
   if (!url) return null;
   try {
@@ -31,29 +37,25 @@ const getYouTubeEmbedUrl = (url) => {
         return `https://www.youtube.com/embed/${videoId}`;
       }
     }
-    return null; // Không phải link YouTube hợp lệ
+    return null;
   } catch (e) {
     console.error("Lỗi xử lý URL YouTube:", e);
     return null;
   }
 };
 
-
-// --- Component con: Lịch Sắp Tới ---
+// --- Component con: Lịch Sắp Tới (Không đổi) ---
 const UpcomingEventsList = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // SỬA: Thêm state cho Modal chi tiết bài hát
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSong, setSelectedSong] = useState(null); // Dữ liệu bài hát đầy đủ
+  const [selectedSong, setSelectedSong] = useState(null);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      // ... (code fetchEvents giữ nguyên)
       try {
         setLoading(true);
         const response = await fetch(`${API_BASE_URL}/events?limit=3`); 
@@ -71,20 +73,16 @@ const UpcomingEventsList = () => {
     fetchEvents();
   }, []);
 
-  // SỬA: Hàm xử lý khi click vào tên bài hát
   const handleSongClick = async (songId) => {
     if (!songId) {
       console.warn("Bài hát không có ID.");
       return;
     }
-    
     setIsModalOpen(true);
     setModalLoading(true);
     setModalError(null);
-    setSelectedSong(null); // Xóa bài hát cũ
-
+    setSelectedSong(null);
     try {
-      // Gọi API để lấy *toàn bộ* chi tiết bài hát (bao gồm lyrics, URLs)
       const response = await fetch(`${API_BASE_URL}/songs/${songId}`);
       if (!response.ok) {
         throw new Error('Không thể tải chi tiết bài hát');
@@ -98,18 +96,15 @@ const UpcomingEventsList = () => {
     }
   };
 
-  // SỬA: Hàm đóng modal
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSelectedSong(null);
     setModalError(null);
   };
 
-
   if (loading) return <LoadingSpinner />;
   if (error) return <p className="text-center text-red-600">{error}</p>;
 
-  // SỬA: Component con để render tên bài hát (giúp code gọn hơn)
   const SongTitle = ({ song, note }) => {
     if (!song) {
       return <span className="text-gray-500 italic">N/A</span>;
@@ -131,7 +126,7 @@ const UpcomingEventsList = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {events.map((event) => (
+         {events.map((event) => (
           <div
             key={event.id}
             className="p-6 bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col h-full"
@@ -144,52 +139,50 @@ const UpcomingEventsList = () => {
                 <CalendarIcon className="w-4 h-4 mr-2" />
                 <span>{new Date(event.date).toLocaleDateString('vi-VN')}</span>
               </div>
-              
-              {/* SỬA: Dùng component SongTitle và kiểm tra null */}
               <div className="mt-4 pt-4 border-t border-gray-200 text-sm text-navy-700">
-                <p className="flex">
+                <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Nhập Lễ</strong> 
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
-                    <SongTitle song={event.nhapLeSong} note={event.nhapLe_note} />
+                    <SongTitle song={event.nhapLeSong} note={event.nhapLe_note} /> {event.nhapLe_note}
                   </span>
                 </p>
-                <p className="flex">
+                <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Đáp Ca</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
                     <SongTitle song={event.dapCaSong} note={event.dapCa_note} />
                   </span>
                 </p>
-                  <p className="flex">
+                  <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Alleluia</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
                     <SongTitle song={event.alleluiaSong} note={event.alleluia_note} />
                   </span>
                 </p>
-                  <p className="flex">
+                  <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Dâng Lễ</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
                     <SongTitle song={event.dangLeSong} note={event.dangLe_note} />
                   </span>
                 </p>
-                <p className="flex">
+                <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Hiệp Lễ</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
                     <SongTitle song={event.hiepLeSong} note={event.hiepLe_note} />
                   </span>
                 </p>
-                <p className="flex">
+                <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Kết Lễ</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
                     <SongTitle song={event.ketLeSong} note={event.ketLe_note} />
                   </span>
                 </p>
-                <p className="flex">
+                <p className="flex mb-2">
                   <strong className="text-navy-900 w-16 flex-shrink-0">Đức Mẹ</strong>
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
@@ -211,57 +204,48 @@ const UpcomingEventsList = () => {
         ))}
       </div>
 
-      {/* SỬA: Thêm Modal hiển thị chi tiết bài hát */}
+      {/* Modal chi tiết bài hát (giữ nguyên) */}
       <Modal
         title={selectedSong ? selectedSong.title : "Đang tải..."}
         open={isModalOpen}
         onCancel={handleModalClose}
-        footer={null} // Không cần nút OK/Cancel
-        width={800} // Tăng chiều rộng
-        bodyStyle={{ minHeight: '600px' }}
+        footer={null}
+        width={800}
       >
         <Spin spinning={modalLoading}>
           {modalError && <p className="text-red-600 text-center">{modalError}</p>}
           {selectedSong && (
             <div className="space-y-4">
-              {/* Thông tin cơ bản */}
               <div className="text-sm">
                 <p><strong>Tác giả:</strong> {selectedSong.author || 'N/A'}</p>
                 <p><strong>Sách:</strong> {selectedSong.songbook || 'N/A'} - <strong>Trang:</strong> {selectedSong.songbook_page || 'N/A'}</p>
               </div>
-
-              {/* Tabs cho các nội dung */}
               <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="Lời Bài Hát" key="1">
                   <div className="
-                    whitespace-pre-wrap  
-                    font-serif           
-                    text-base            
-                    leading-relaxed      
-                    text-navy-800        
-                    h-250 overflow-y-auto bg-gray-50 p-4 rounded
+                    whitespace-pre-wrap font-serif text-base
+                    leading-relaxed text-navy-800 h-80
+                    overflow-y-auto bg-gray-50 p-4 rounded
                   ">
                     {selectedSong.lyrics || 'Chưa có lời bài hát.'}
                   </div>
                 </Tabs.TabPane>
-                
                 <Tabs.TabPane tab="Sheet Nhạc (PDF)" key="2">
                   {selectedSong.sheet_music_url ? (
                     <iframe 
                       src={selectedSong.sheet_music_url}
-                      className="w-full h-[500px]" // Đặt chiều cao cố định cho PDF
+                      className="w-full h-[500px]"
                       title="Sheet Music"
                     />
                   ) : (
                     <p className="text-center p-8">Không tìm thấy sheet nhạc.</p>
                   )}
                 </Tabs.TabPane>
-
                 <Tabs.TabPane tab="YouTube" key="3">
                   {getYouTubeEmbedUrl(selectedSong.youtube_url) ? (
                     <iframe 
                       src={getYouTubeEmbedUrl(selectedSong.youtube_url)}
-                      className="w-full aspect-video" // Tỷ lệ 16:9
+                      className="w-full aspect-video"
                       title="YouTube Video"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen
@@ -279,15 +263,26 @@ const UpcomingEventsList = () => {
   );
 };
 
-// --- Component con: Tin Mới Nhất ---
-// (Component này không thay đổi, giữ nguyên)
+// --- Component con: Tin Mới Nhất (ĐÃ CẬP NHẬT GALLERY) ---
 const LatestNewsFeed = () => {
-  // ... (Toàn bộ code của component này giữ nguyên)
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-   useEffect(() => {
+  // State cho Modal Thư Viện Ảnh
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+  const [selectedNewsItem, setSelectedNewsItem] = useState(null); 
+  
+  // State để tải ảnh bên trong Modal
+  const [galleryImages, setGalleryImages] = useState([]);
+  const [galleryLoading, setGalleryLoading] = useState(false);
+  const [galleryError, setGalleryError] = useState(null);
+
+  // State cho Lightbox (bên trong Modal)
+  const [lightboxOpen, setLightboxOpen] =useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  useEffect(() => {
     const fetchNews = async () => {
       try {
         setLoading(true);
@@ -306,38 +301,193 @@ const LatestNewsFeed = () => {
     fetchNews();
   }, []);
 
+  // // Hàm fetch *ảnh* cho tin tức đó (Đang dùng giả lập)
+  // const fetchGalleryForNews = async (newsId) => {
+  //   if (!newsId) return;
+
+  //   setGalleryLoading(true);
+  //   setGalleryError(null);
+  //   setGalleryImages([]);
+
+  //   try {
+  //     // --- GIẢ LẬP DỮ LIỆU ---
+  //     setTimeout(() => {
+  //       let mockImages = [];
+  //       if (newsId === 1) { // Giả lập gallery cho tin ID 1
+  //          mockImages = [
+  //           { id: 101, src: 'https://images.pexels.com/photos/1819825/pexels-photo-1819825.jpeg', alt: 'Mô tả ảnh 1', width: 600, height: 800 },
+  //           { id: 102, src: 'https://images.pexels.com/photos/29169916/pexels-photo-29169916.jpeg', alt: 'Mô tả ảnh 2', width: 800, height: 600 },
+  //           { id: 103, src: 'https://images.pexels.com/photos/62645/pexels-photo-62645.jpeg', alt: 'Mô tả ảnh 3', width: 600, height: 600 },
+  //           { id: 104, src: 'https://images.pexels.com/photos/218480/pexels-photo-218480.jpeg', alt: 'Mô tả ảnh 4', width: 600, height: 300 },
+  //           { id: 105, src: 'https://images.pexels.com/photos/19143152/pexels-photo-19143152.jpeg', alt: 'Mô tả ảnh 5', width: 400, height: 900 },
+  //         ];
+  //       } else if (newsId === 2) { // Giả lập gallery cho tin ID 2
+  //          mockImages = [
+  //           { id: 201, src: 'https://placehold.co/600x700/2C3A55/FFFFFF?text=Dã+Ngoại+1', alt: 'Mô tả ảnh 4', width: 600, height: 700 },
+  //           { id: 202, src: 'https://placehold.co/700x900/2C3A55/FFFFFF?text=Dã+Ngoại+2', alt: 'Mô tả ảnh 5', width: 700, height: 900 },
+  //           { id: 203, src: 'https://placehold.co/800x500/2C3A55/FFFFFF?text=Dã+Ngoại+3', alt: 'Mô tả ảnh 6', width: 800, height: 500 },
+  //           { id: 204, src: 'https://placehold.co/500x700/2C3A55/FFFFFF?text=Dã+Ngoại+4', alt: 'Mô tả ảnh 7', width: 500, height: 700 },
+  //           { id: 205, src: 'https://placehold.co/900x500/2C3A55/FFFFFF?text=Dã+Ngoại+5', alt: 'Mô tả ảnh 8', width: 900, height: 500 },
+  //         ];
+  //       } else { // Tin khác không có ảnh
+  //         setGalleryError("Tin tức này không có thư viện ảnh.");
+  //       }
+
+  //       if(mockImages.length > 0) {
+  //         setGalleryImages(mockImages);
+  //       }
+  //       setGalleryLoading(false);
+  //     }, 800);
+  //     // --- KẾT THÚC GIẢ LẬP ---
+
+  //   } catch (err) {
+  //     setGalleryError(err.message);
+  //     setGalleryLoading(false);
+  //   }
+  // };
+  
+  // SỬA: Hàm fetch ảnh thực tế từ API
+    const fetchGalleryForNews = async (newsId) => {
+      if (!newsId) return;
+
+      setGalleryLoading(true);
+      setGalleryError(null);
+      setGalleryImages([]);
+
+      try {
+        // --- CODE THẬT: GỌI API BACKEND SỬ DỤNG newsId ---
+        const response = await fetch(`${API_BASE_URL}/news/${newsId}/gallery`);
+        
+        if (!response.ok) {
+          // Bắt lỗi nếu status code không phải 2xx
+          throw new Error('Không thể tải thư viện ảnh cho tin tức này.');
+        }
+
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          setGalleryImages(data);
+        } else {
+          // Xử lý trường hợp API trả về mảng rỗng
+          setGalleryError("Tin tức này hiện chưa có thư viện ảnh.");
+        }
+        // --- KẾT THÚC CODE THẬT ---
+        
+      } catch (err) {
+        // Dùng err.message từ lỗi throw hoặc mặc định
+        setGalleryError(err.message || "Đã xảy ra lỗi trong quá trình tải ảnh.");
+      } finally {
+        setGalleryLoading(false);
+      }
+    };
+
+  // Hàm mở Modal Gallery
+  const handleReadMoreClick = (newsItem) => {
+    setSelectedNewsItem(newsItem);
+    setIsGalleryModalOpen(true);
+    fetchGalleryForNews(newsItem.id); // Bắt đầu tải ảnh khi mở modal
+  };
+
+  // Hàm đóng Modal Gallery
+  const handleGalleryModalClose = () => {
+    setIsGalleryModalOpen(false);
+    setSelectedNewsItem(null);
+    setGalleryImages([]); 
+    setGalleryError(null);
+  };
+
+  // Hàm mở Lightbox (bên trong modal)
+  const handleImageClickInModal = (imageIndex) => {
+    setLightboxIndex(imageIndex);
+    setLightboxOpen(true);
+  };
+
+  // Chuẩn bị slide cho Lightbox
+  const slides = galleryImages.map(img => ({ 
+    src: img.src, 
+    width: img.width, 
+    height: img.height 
+  }));
+
   if (loading) return <LoadingSpinner />;
   if (error) return <p className="text-center text-red-600">{error}</p>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {news.map((item) => (
-        <div
-          key={item.id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-1"
-        > 
-          <img
-            className="h-48 w-full object-cover"
-            src={item.featured_image_url || 'https://placehold.co/600x400/CCCCCC/000000?text=No+Image'}
-            alt={item.title}
-          />
-          <div className="p-6">
-            <p className="text-sm text-gray-500 mb-1">
-              {new Date(item.createdAt).toLocaleDateString('vi-VN')}
-            </p>
-            <h3 className="text-xl font-bold font-serif text-navy-900 mb-3">
-              {item.title}
-            </h3>
-            <Link
-              to={`/news/${item.slug}`}
-              className="font-medium text-gold-600 hover:text-gold-700"
-            >
-              Đọc tiếp &rarr;
-            </Link>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {news.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-1"
+          > 
+            <img
+              className="h-48 w-full object-cover"
+              src={item.featured_image_url || 'https://res.cloudinary.com/ddnzxqyip/image/upload/v1762939988/z7216443717875_a3c9861f8b05e8f04a2b8a1c3d5a90d8_ewxkid.jpg'}
+              alt={item.title}
+            />
+            <div className="p-6">
+              <p className="text-sm text-gray-500 mb-1">
+                {new Date(item.createdAt).toLocaleDateString('vi-VN')}
+              </p>
+              <h3 className="text-xl font-bold font-serif text-navy-900 mb-3">
+                {item.title}
+              </h3>
+              
+              {/* Thay thế Link bằng Span có onClick để mở Modal */}
+              <span
+                onClick={() => handleReadMoreClick(item)}
+                className="font-medium text-gold-600 hover:text-gold-700 cursor-pointer"
+              >
+                Xem thư viện ảnh &rarr;
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+
+      {/* Modal cho Thư Viện Ảnh */}
+      <Modal
+        title={selectedNewsItem ? `Thư viện: ${selectedNewsItem.title}` : "Đang tải..."}
+        open={isGalleryModalOpen}
+        onCancel={handleGalleryModalClose}
+        footer={null}
+        width="90%" 
+        style={{ top: 20 }}
+      >
+        <Spin spinning={galleryLoading}>
+          <div className="py-4" style={{ minHeight: '400px', maxHeight: '80vh', overflowY: 'auto' }}>
+            {galleryError && (
+              <p className="text-red-600 text-center p-8">{galleryError}</p>
+            )}
+            
+            {!galleryError && galleryImages.length > 0 && (
+              // DÙNG CSS COLUMNS (giống Pexels)
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+                {galleryImages.map((image, idx) => (
+                  // break-inside-avoid ngăn ảnh bị ngắt qua 2 cột
+                  <div key={image.id} className="mb-4 break-inside-avoid">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-auto rounded-lg shadow-md cursor-pointer transition-transform duration-300 hover:scale-105"
+                      onClick={() => handleImageClickInModal(idx)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </Spin>
+      </Modal>
+
+      {/* Lightbox để phóng to ảnh */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={slides}
+        index={lightboxIndex}
+      />
+    </>
   );
 };
 
@@ -357,7 +507,7 @@ const HomePage = () => {
   return (
     <div className="space-y-24">
       
-      {/* Hero Section (Giữ nguyên) */}
+      {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] text-white">
         
         {/* Lớp 1: Slider (z-0) */}
@@ -389,7 +539,7 @@ const HomePage = () => {
           <div className="bg-black/10 backdrop-brightness-[.7] p-8 md:p-12 w-full h-full flex flex-col items-center justify-center"> 
             
             <h1 className="text-4xl md:text-6xl font-black font-serif mb-4">
-              Phụng Vụ Bằng Lời Ca Tiếng Hát
+              Phụng Sự Bằng Lời Ca Tiếng Hát
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
@@ -407,7 +557,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Main Content (Giữ nguyên) */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
         {/* Upcoming Events */}
         <section>
