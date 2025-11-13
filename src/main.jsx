@@ -21,6 +21,7 @@ import JoinPage from './pages/JoinPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MemberDashboard from './pages/MemberDashboard.jsx';
+import LituryTable from './pages/LiturgyTable.jsx';
 // (Import thêm component ProtectedRoute chúng ta sẽ tạo ở Bước 5)
 import ProtectedRoute from './components/layout/ProtectedRoute.jsx';
 
