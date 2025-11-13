@@ -249,7 +249,7 @@ const LiturgyTable = () => {
                         <thead>
                             <tr>
                                 <th className="w-[15%]">Ngày</th>
-                                <th className="w-[10%]">Màu Lễ</th>
+                                <th className="w-[10%]">Màu Áo Lễ</th>
                                 <th className="w-[25%]">Nội Dung Lễ</th>
                                 <th className="w-[50%]">Bài Đọc / Tin Mừng</th>
                             </tr>
@@ -317,5 +317,6 @@ const LiturgyTable = () => {
         </div>
     );
 };
+
 
 export default LiturgyTable;
