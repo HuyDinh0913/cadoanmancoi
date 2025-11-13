@@ -1,21 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import App from './App.jsx';
-// import { AppContextProvider } from './context/AppContext.jsx';
-// import { GlobalStyles } from './styles/global.jsx';
-
-// // Bọc toàn bộ ứng dụng trong AppContextProvider
-// // Thêm GlobalStyles để áp dụng CSS tùy chỉnh
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <AppContextProvider>
-//       <GlobalStyles />
-//       <App />
-//     </AppContextProvider>
-//   </React.StrictMode>
-// );
-
-// file: main.jsx (ĐÃ SỬA)
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { AppContextProvider } from './context/AppContext.jsx';
@@ -63,6 +45,7 @@ const router = createBrowserRouter([
       { path: 'join', element: <JoinPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'login', element: <LoginPage /> },
+      { path: 'liturgical-calendar', element: <LituryTable /> },
       
       // 4. Xử lý route được bảo vệ (MemberDashboard)
       {
