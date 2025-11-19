@@ -87,6 +87,8 @@ const MusicPage = () => {
             { id: 5, title: 'Xuất hành', video_url: 'https://www.youtube.com/watch?v=nG4_t0qN2oA&list=RDnG4_t0qN2oA&start_radio=1&pp=ygUZbeG7q25nIGNow7phIHPhu5FuZyBs4bqhaaAHAdIHCQkDCgGHKiGM7w%3D%3D', season: 'lent' },
             { id: 6, title: 'Chúa sống lại rồi', video_url: 'https://www.youtube.com/watch?v=r1WE0RLerbA&list=RDr1WE0RLerbA&start_radio=1&pp=ygUZbeG7q25nIGNow7phIHPhu5FuZyBs4bqhaaAHAQ%3D%3D', season: 'easter' },
             { id: 7, title: 'Hôm nay toàn dân Chúa Trời', video_url: 'https://www.youtube.com/watch?v=5jB0vPKQaPI', season: 'christmas' },
+            { id: 8, title: 'Chúa đã Giáng Sinh', video_url: 'https://www.youtube.com/watch?v=aBAQsUuSR2Q', season: 'christmas' },
+            { id: 9, title: 'Vào Một Đêm Đông', video_url: 'https://www.youtube.com/watch?v=fayA-k7Cb5Q', season: 'christmas' },
           ];
           
           setRecordings(mockData);
