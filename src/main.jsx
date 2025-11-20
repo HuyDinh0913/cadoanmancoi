@@ -24,6 +24,7 @@ import MemberDashboard from './pages/MemberDashboard.jsx';
 import LituryTable from './pages/LiturgyTable.jsx';
 // (Import thêm component ProtectedRoute chúng ta sẽ tạo ở Bước 5)
 import ProtectedRoute from './components/layout/ProtectedRoute.jsx';
+import MemberManager from './pages/MemberManager.jsx';
 
 // 3. Tạo router - Đây là nơi thay thế switch statement của bạn
 const router = createBrowserRouter([
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
     children: [
       // Đây là các route tương ứng với 'case' của bạn
       { path: '/', element: <HomePage /> },
-      { path: 'about', element: <AboutPage /> },
+      { path: 'member', element: <MemberManager /> },
       { path: 'activities', element: <ActivitiesPage /> },
       { path: 'events-calendar', element: <EventsCalendarPage /> },
       { path: 'news', element: <NewsPage /> },
