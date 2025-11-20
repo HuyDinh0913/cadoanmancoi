@@ -18,7 +18,7 @@ const Navbar = () => {
   // SỬA 4: Đổi `page` (tên state) thành `path` (đường dẫn URL)
   const navLinks = [
     { name: 'Trang Chủ', path: '/' },
-    { name: 'Giới Thiệu', path: '/about' },
+    { name: 'Trang Ca viên', path: '/member' },
     { name: 'Hoạt Động', path: '/activities' },
     { name: 'Góc Âm Nhạc', path: '/music' },
     { name: 'Tìm Bài Hát', path: '/song-search' },
