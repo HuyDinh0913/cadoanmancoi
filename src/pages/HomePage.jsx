@@ -144,7 +144,7 @@ const UpcomingEventsList = () => {
                   <strong className="text-navy-900 w-16 flex-shrink-0">Nhập Lễ</strong> 
                   <span className="flex-1">
                     <strong className="text-navy-900">: </strong>
-                    <SongTitle song={event.nhapLeSong} note={event.nhapLe_note} /> {event.nhapLe_note}
+                    <SongTitle song={event.nhapLeSong} note={event.nhapLe_note} />
                   </span>
                 </p>
                 <p className="flex mb-2">
