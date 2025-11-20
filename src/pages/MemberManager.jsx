@@ -1,4 +1,3 @@
-//link demo: https://gemini.google.com/share/ba855e840a98
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Users, 
@@ -389,11 +388,80 @@ export default function MemberManager() {
           className="flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-sm transition-colors w-full sm:w-auto justify-center"
         >
           <Plus className="w-5 h-5 mr-2" />
-          Thêm Ca viên
+          Thêm thành viên
         </button>
       </div>
       
-      <div className="overflow-x-auto flex-1 custom-scrollbar">
+      {/* --- Mobile Card View (Visible on Mobile only) --- */}
+      <div className="md:hidden flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-50">
+        {filteredMembers.length > 0 ? (
+          filteredMembers.map((member) => (
+            <div key={member.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+              {/* Card Header */}
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex items-center space-x-3">
+                   <div className="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                      {member.name.substring(0, 2).toUpperCase()}
+                   </div>
+                   <div>
+                      <h4 className="font-bold text-slate-800">{member.name}</h4>
+                      <p className="text-xs text-slate-400">ID: {member.id}</p>
+                   </div>
+                </div>
+                <span className="px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                    {member.role}
+                </span>
+              </div>
+              
+              {/* Card Body */}
+              <div className="space-y-2 text-sm text-slate-600 mb-4 border-t border-slate-50 pt-3">
+                 <div className="flex justify-between">
+                    <span className="text-slate-400">Bổn mạng:</span>
+                    <span className="font-medium text-purple-700">
+                        {member.saintName ? member.saintName : '--'} 
+                        {member.feastDate && ` (${formatDateShort(member.feastDate)})`}
+                    </span>
+                 </div>
+                 <div className="flex justify-between">
+                    <span className="text-slate-400">Ngày sinh:</span>
+                    <span>{formatDate(member.dob)}</span>
+                 </div>
+                 <div className="flex justify-between">
+                    <span className="text-slate-400">SĐT:</span>
+                    <span className="font-medium">{member.phone || '--'}</span>
+                 </div>
+                 {member.email && (
+                   <div className="flex justify-between">
+                      <span className="text-slate-400">Email:</span>
+                      <span className="truncate max-w-[180px]">{member.email}</span>
+                   </div>
+                 )}
+              </div>
+
+              {/* Card Actions */}
+              <div className="flex space-x-3">
+                 <button 
+                    onClick={() => openMemberModal(member)}
+                    className="flex-1 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors flex items-center justify-center"
+                 >
+                    <Edit2 size={16} className="mr-1" /> Sửa
+                 </button>
+                 <button 
+                    onClick={() => handleDeleteMember(member.id)}
+                    className="flex-1 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors flex items-center justify-center"
+                 >
+                    <Trash2 size={16} className="mr-1" /> Xóa
+                 </button>
+              </div>
+            </div>
+          ))
+        ) : (
+           <div className="text-center py-8 text-slate-400">Không tìm thấy thành viên nào.</div>
+        )}
+      </div>
+
+      {/* --- Desktop Table View (Hidden on Mobile) --- */}
+      <div className="hidden md:block overflow-x-auto flex-1 custom-scrollbar">
         <table className="w-full text-left border-collapse min-w-[800px]">
           <thead className="bg-slate-50 text-slate-600 uppercase text-xs font-semibold sticky top-0 z-10">
             <tr>
@@ -536,7 +604,7 @@ export default function MemberManager() {
         {/* Nav Items (Ẩn thanh cuộn khi thu nhỏ) */}
         <nav className={`p-4 space-y-1 flex-1 ${isSidebarCollapsed ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}>
           <SidebarItem id="dashboard" icon={Users} label="Tổng quan" />
-          <SidebarItem id="members" icon={ChevronRight} label="Danh sách Ca viên" />
+          <SidebarItem id="members" icon={ChevronRight} label="Danh sách thành viên" />
           <SidebarItem id="events" icon={Calendar} label="Sự kiện" />
         </nav>
         
@@ -600,7 +668,7 @@ export default function MemberManager() {
             <div className="mb-8">
               <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
                 {activeTab === 'dashboard' && 'Xin chào, Quản lý!'}
-                {activeTab === 'members' && 'Quản lý Ca viên'}
+                {activeTab === 'members' && 'Quản lý thành viên'}
                 {activeTab === 'events' && 'Sự kiện & Hoạt động'}
               </h1>
               <p className="text-slate-500">
@@ -624,7 +692,7 @@ export default function MemberManager() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
             <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-              <h3 className="font-bold text-lg">{editingItem ? 'Chỉnh sửa thông tin' : 'Thêm Ca viên mới'}</h3>
+              <h3 className="font-bold text-lg">{editingItem ? 'Chỉnh sửa thông tin' : 'Thêm thành viên mới'}</h3>
               <button onClick={closeMemberModal} className="text-slate-400 hover:text-slate-600"><X size={20} /></button>
             </div>
             <form onSubmit={handleSaveMember} className="p-6 space-y-4 overflow-y-auto custom-scrollbar">
