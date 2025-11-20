@@ -22,7 +22,7 @@ const Navbar = () => {
     { name: 'Hoạt Động', path: '/activities' },
     { name: 'Góc Âm Nhạc', path: '/music' },
     { name: 'Tìm Bài Hát', path: '/song-search' },
-    { name: 'Lịch Phụng Vụ', path: '/liturgical-calendar' },
+    { name: 'Lịch Công Giáo', path: '/liturgical-calendar' },
     { name: 'Liên Hệ', path: '/contact' },
   ];
 
