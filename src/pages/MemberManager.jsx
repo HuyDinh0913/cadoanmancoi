@@ -40,6 +40,9 @@ const INITIAL_MEMBERS = [
   { id: 18, name: 'Công An', saintName: 'Giuse', feastDate: '2024-03-19', email: '', phone: '0903822735', role: 'Thành viên', dob: '1965-12-10' },
 ];
 
+// Mỗi khi bạn thay đổi INITIAL_MEMBERS, hãy đổi giá trị này (ví dụ: '1.0' -> '1.1')
+const DATA_VERSION = '1.1';
+
 const INITIAL_EVENTS = [
   { id: 1, title: 'Họp tổng kết tháng 11', date: '2023-11-30', location: 'Phòng họp A', description: 'Báo cáo doanh thu và KPI.' },
   { id: 2, title: 'Year End Party', date: '2023-12-25', location: 'Nhà hàng Sen', description: 'Tiệc tất niên cuối năm.' },
@@ -93,21 +96,31 @@ export default function MemberManager() {
   // Sửa logic khởi tạo để ưu tiên dữ liệu mới nếu người dùng đã lưu cache cũ
   // Hoặc bạn có thể xóa localStorage.clear() ở console để reset
   const [members, setMembers] = useState(() => {
-    const saved = localStorage.getItem('members');
-    // Nếu dữ liệu cũ quá ít (mock data cũ), reset về danh sách mới
-    if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.length < 10 && parsed[0]?.name === 'Nguyễn Văn A') {
-            return INITIAL_MEMBERS;
-        }
-        return parsed;
+    if (typeof window === 'undefined') return INITIAL_MEMBERS; // An toàn cho Next.js/SSR
+    
+    const savedVersion = localStorage.getItem('data_version'); // <--- Lấy version cũ
+    const savedMembers = localStorage.getItem('members');
+    
+    // Nếu version trong máy người dùng KHÁC version trong code ('1.1')
+    // => Bỏ qua cache cũ, dùng INITIAL_MEMBERS mới
+    if (savedVersion !== DATA_VERSION) {
+        return INITIAL_MEMBERS;
     }
-    return INITIAL_MEMBERS;
+
+    return savedMembers ? JSON.parse(savedMembers) : INITIAL_MEMBERS;
   });
 
   const [events, setEvents] = useState(() => {
-    const saved = localStorage.getItem('events');
-    return saved ? JSON.parse(saved) : INITIAL_EVENTS;
+    if (typeof window === 'undefined') return INITIAL_EVENTS;
+
+    const savedVersion = localStorage.getItem('data_version');
+    const savedEvents = localStorage.getItem('events');
+
+    if (savedVersion !== DATA_VERSION) { // <--- Kiểm tra version
+        return INITIAL_EVENTS;
+    }
+
+    return savedEvents ? JSON.parse(savedEvents) : INITIAL_EVENTS;
   });
 
   // State cho Modal/Form
@@ -129,6 +142,8 @@ export default function MemberManager() {
   useEffect(() => {
     localStorage.setItem('members', JSON.stringify(members));
     localStorage.setItem('events', JSON.stringify(events));
+    // QUAN TRỌNG: Lưu version hiện tại vào máy người dùng
+    localStorage.setItem('data_version', DATA_VERSION); 
   }, [members, events]);
 
   // --- Logic Handlers ---
