@@ -21,23 +21,23 @@ import {
 // Lưu ý: Năm sinh được giả định là 1990 và năm lễ bổn mạng là 2024 vì hình ảnh chỉ cung cấp ngày/tháng
 const INITIAL_MEMBERS = [
   { id: 1, name: 'Đinh Thanh Huy', saintName: 'Giuse', feastDate: '2024-05-01', email: '', phone: '0909091533', role: 'Thành viên', dob: '1981-09-01' },
-  { id: 2, name: 'Phương Tuyền', saintName: 'Maria', feastDate: '2024-08-15', email: '', phone: '01867227346', role: 'Thành viên', dob: '1990-01-15' },
-  { id: 3, name: 'Nguyễn Thị Ngọc Tuyết', saintName: 'Agnes', feastDate: '2024-01-21', email: '', phone: '0974310246', role: 'Thành viên', dob: '1990-01-22' },
+  { id: 2, name: 'Phương Tuyền', saintName: 'Maria', feastDate: '2024-08-15', email: '', phone: '01867227346', role: 'Thành viên', dob: '1992-01-15' },
+  { id: 3, name: 'Nguyễn Thị Ngọc Tuyết', saintName: 'Agnes', feastDate: '2024-01-21', email: '', phone: '0974310246', role: 'Thành viên', dob: '1985-01-22' },
   { id: 4, name: 'Hoa Xinh', saintName: 'Maria', feastDate: '2024-12-08', email: '', phone: '0908395596', role: 'Thành viên', dob: '1982-03-31' },
   { id: 5, name: 'Song Hỷ', saintName: 'Gioan Baotixita', feastDate: '2024-06-24', email: '', phone: '0909144901', role: 'Thành viên', dob: '1983-04-26' },
-  { id: 6, name: 'Nguyễn Thị Minh Lý', saintName: 'Têrêsa', feastDate: '2024-10-01', email: '', phone: '0947164509', role: 'Thành viên', dob: '1990-05-01' },
-  { id: 7, name: 'Đức Khanh', saintName: 'Phêrô', feastDate: '2024-06-29', email: '', phone: '0933578034', role: 'Thành viên', dob: '1990-05-05' },
+  { id: 6, name: 'Nguyễn Thị Minh Lý', saintName: 'Têrêsa', feastDate: '2024-10-01', email: '', phone: '0947164509', role: 'Thành viên', dob: '1974-05-01' },
+  { id: 7, name: 'Đức Khanh', saintName: 'Phêrô', feastDate: '2024-06-29', email: '', phone: '0933578034', role: 'Thành viên', dob: '1995-05-05' },
   { id: 8, name: 'Thúy Hạnh', saintName: 'Phanxica', feastDate: '2024-03-09', email: '', phone: '0971222957', role: 'Thành viên', dob: '1981-05-10' },
   { id: 9, name: 'Bích Thủy', saintName: 'Têrêsa', feastDate: '2024-10-01', email: '', phone: '0909648550', role: 'Thành viên', dob: '1990-05-22' },
   { id: 10, name: 'Ngọc Tiền', saintName: 'Maria', feastDate: '2024-08-15', email: '', phone: '0985028634', role: 'Thành viên', dob: '1990-06-08' },
   { id: 11, name: 'Hồ Văn Lâm', saintName: 'Phêrô', feastDate: '2024-06-29', email: '', phone: '0903867419', role: 'Thành viên', dob: '1974-08-15' },
-  { id: 12, name: 'Minh Trang', saintName: 'Agata', feastDate: '2024-02-05', email: '', phone: '0909948228', role: 'Thành viên', dob: '1990-08-16' },
-  { id: 13, name: 'Văn Trung', saintName: 'Gioan Baotixita', feastDate: '2024-06-24', email: '', phone: '0933071068', role: 'Thành viên', dob: '1990-10-07' },
-  { id: 14, name: 'Ngọc Diễm', saintName: 'Anna', feastDate: '2024-07-26', email: '', phone: '0977160416', role: 'Thành viên', dob: '1990-11-02' },
-  { id: 15, name: 'Ánh Ngân', saintName: 'Maria', feastDate: '2024-08-15', email: '', phone: '01266598011', role: 'Thành viên', dob: '1990-11-05' },
-  { id: 16, name: 'Thu Thủy', saintName: 'Maria', feastDate: '2024-10-07', email: '', phone: '0909391439', role: 'Thành viên', dob: '1990-11-22' },
+  { id: 12, name: 'Minh Trang', saintName: 'Agata', feastDate: '2024-02-05', email: '', phone: '0909948228', role: 'Thành viên', dob: '1968-08-16' },
+  { id: 13, name: 'Văn Trung', saintName: 'Gioan Baotixita', feastDate: '2024-06-24', email: '', phone: '0933071068', role: 'Thành viên', dob: '1968-10-07' },
+  { id: 14, name: 'Ngọc Diễm', saintName: 'Anna', feastDate: '2024-07-26', email: '', phone: '0977160416', role: 'Thành viên', dob: '1986-11-02' },
+  { id: 15, name: 'Ánh Ngân', saintName: 'Maria', feastDate: '2024-08-15', email: '', phone: '01266598011', role: 'Thành viên', dob: '1994-11-05' },
+  { id: 16, name: 'Thu Thủy', saintName: 'Maria', feastDate: '2024-10-07', email: '', phone: '0909391439', role: 'Thành viên', dob: '1966-11-22' },
   { id: 17, name: 'Cô Xuân', saintName: 'Anna', feastDate: '2024-07-26', email: '', phone: '', role: 'Thành viên', dob: '1990-12-08' },
-  { id: 18, name: 'Huỳnh Công An', saintName: 'Giuse', feastDate: '2024-03-19', email: '', phone: '0903822735', role: 'Thành viên', dob: '1961-12-10' },
+  { id: 18, name: 'Công An', saintName: 'Giuse', feastDate: '2024-03-19', email: '', phone: '0903822735', role: 'Thành viên', dob: '1965-12-10' },
 ];
 
 const INITIAL_EVENTS = [
