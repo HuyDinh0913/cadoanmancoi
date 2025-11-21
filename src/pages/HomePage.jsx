@@ -553,7 +553,7 @@ const HomePage = () => {
           <div className="bg-black/10 backdrop-brightness-[.7] p-8 md:p-12 w-full h-full flex flex-col items-center justify-center"> 
             
             <h1 className="text-4xl md:text-6xl font-black font-serif mb-4">
-              Phụng Sự Bằng Lời Ca Tiếng Hát
+              Phụng Vụ Bằng Lời Ca Tiếng Hát
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
